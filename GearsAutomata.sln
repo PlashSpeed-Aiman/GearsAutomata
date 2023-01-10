@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33122.133
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GearsAutomata", "GearsAutomata\GearsAutomata.csproj", "{24AD002C-88AD-4A4E-88AE-DFBF00C65014}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MathsCalc", "MathsCalc\MathsCalc.fsproj", "{5E47C665-4295-4D95-A6F3-43157CFB831C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{24AD002C-88AD-4A4E-88AE-DFBF00C65014}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24AD002C-88AD-4A4E-88AE-DFBF00C65014}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24AD002C-88AD-4A4E-88AE-DFBF00C65014}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24AD002C-88AD-4A4E-88AE-DFBF00C65014}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E47C665-4295-4D95-A6F3-43157CFB831C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E47C665-4295-4D95-A6F3-43157CFB831C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E47C665-4295-4D95-A6F3-43157CFB831C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E47C665-4295-4D95-A6F3-43157CFB831C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {01B6B6DA-3C84-48C1-9D78-E1C06BE6EBAA}
+	EndGlobalSection
+EndGlobal
