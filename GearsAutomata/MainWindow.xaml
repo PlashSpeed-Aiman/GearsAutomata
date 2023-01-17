@@ -6,9 +6,13 @@
         xmlns:local="clr-namespace:GearsAutomata"
         xmlns:viewModel="clr-namespace:GearsAutomata.ViewModel"
         xmlns:converters="clr-namespace:GearsAutomata.Converters"
+        xmlns:winformchart="clr-namespace:System.Windows.Forms.DataVisualization.Charting;assembly=System.Windows.Forms.DataVisualization"
+        xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
+        xmlns:charting="clr-namespace:System.Windows.Forms.DataVisualization.Charting;assembly=WinForms.DataVisualization"
         mc:Ignorable="d"
+        Name="Window1"
         Background="LightCyan"
-        Title="GearsAutomata" Height="600" Width="800">
+        Title="GearsAutomata" Height="650" Width="800">
         <Window.DataContext>
             <viewModel:MainWindowViewModel/>
         </Window.DataContext>
@@ -23,6 +27,8 @@
             
         </Grid.ColumnDefinitions>
         <StackPanel Margin="10">
+            <TextBlock Text="{Binding ElementName=Window1,Path=Height}"></TextBlock>
+            <TextBlock Text="{Binding ElementName=Window1,Path=Width}"></TextBlock>
             <TextBlock>Vehicular Weight (kg)</TextBlock>
             <TextBox Text="{Binding VehicularWeight}"></TextBox>
             <TextBlock>Tyre Rolling Radius (m) </TextBlock>
@@ -69,63 +75,122 @@
 
 
         </StackPanel>-->
-        <StackPanel Grid.Column="1">
-            <StackPanel>
-                <TextBlock Margin="10,10,0,10">Lowest Gear</TextBlock>
-                <UniformGrid Columns="2" Margin="10,0,10,0">
-                    <Button Padding="10" Command="{Binding CalculateLowestGearCommand}" CommandParameter="FWD">FWD</Button>
-                    <Button Padding="10" Command="{Binding CalculateLowestGearCommand}" CommandParameter="RWD">RWD</Button>
-                </UniformGrid>
-            </StackPanel>
-            <StackPanel>
-                <TextBlock Margin="10,10,10,10">Highest Gear</TextBlock>
-                <UniformGrid Columns="2" Margin="10,0,10,0">
-                    <Button Padding="10" Command="{Binding CalculateHighestGearCommand}" CommandParameter="Fixed">Fixed Top Speed</Button>
-                    <Button Padding="10" Command="{Binding CalculateHighestGearCommand}" CommandParameter="Max">Maximum Top Speed</Button>
+        <TabControl Grid.Column="1">
+            <TabItem Header="General">
+                <DockPanel>
+                    <StackPanel DockPanel.Dock="Top">
+                        <TextBlock Margin="10,10,0,10">Lowest Gear</TextBlock>
+                        <UniformGrid Columns="2" Margin="10,0,10,0">
+                            <Button Padding="10" Command="{Binding CalculateLowestGearCommand}" CommandParameter="FWD">FWD</Button>
+                            <Button Padding="10" Command="{Binding CalculateLowestGearCommand}" CommandParameter="RWD">RWD</Button>
+                        </UniformGrid>
+                    </StackPanel>
+                    <StackPanel  DockPanel.Dock="Top">
+                        <TextBlock Margin="10,10,10,10">Highest Gear</TextBlock>
+                        <UniformGrid Columns="2" Margin="10,0,10,0">
+                            <Button Padding="10" Command="{Binding CalculateHighestGearCommand}" CommandParameter="Fixed">Fixed Top Speed</Button>
+                            <Button Padding="10" Command="{Binding CalculateHighestGearCommand}" CommandParameter="Max">Maximum Top Speed</Button>
+                        </UniformGrid>
+                    </StackPanel>
+                    <StackPanel>
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel.Resources>
+                                <converters:OppositeBooleanConverter x:Key="BooleanConverter"/>
+                            </StackPanel.Resources>
+                            <TextBlock FontSize="15" Margin="10,10,10,0">Intermediate</TextBlock>
+                            <TextBlock Margin="10,0,10,10">Geometric Progression Method</TextBlock>
+                            <UniformGrid Columns="2" Margin="10,0,10,0">
+                                <Button Padding="10" Command="{Binding CalculateGeometricProgressionFiveSpeedCommand}" CommandParameter="5S">5 Speed</Button>
+                                <Button Padding="10" Command="{Binding CalculateGeometricProgressionFiveSpeedCommand}" CommandParameter="6S">6 Speed</Button>
+                            </UniformGrid>
+                            <TextBlock Margin="10,10,10,10">Progessive Method</TextBlock>
+                            <UniformGrid Columns="2" Margin="10,0,10,0">
+                                <Button Command="{Binding CalculateProgressiveCommand}" CommandParameter="5S" Padding="10" >5 Speed</Button>
+                                <Button Command="{Binding CalculateProgressiveCommand}" CommandParameter="6S" Padding="10">6 Speed</Button>
+                            </UniformGrid>
+                        </StackPanel>
+                        <StackPanel Margin="10,10,10,0">
+                            <TextBlock Margin="0,0,0,10">Gradability</TextBlock>
+                            <Button Padding="10" Command="{Binding CalculateGradabilityCommand}" CommandParameter="{Binding ElementName=drivetrain,Path=Text}">Calculate Gradability</Button>
 
-                </UniformGrid>
-            </StackPanel>
-            <StackPanel>
-                
-                <StackPanel Orientation="Vertical">
-                    <StackPanel.Resources>
-                        <converters:OppositeBooleanConverter x:Key="BooleanConverter"/>
-                    </StackPanel.Resources>
-                    <TextBlock FontSize="15" Margin="10,10,10,0">Intermediate</TextBlock>
-                    <TextBlock Margin="10,0,10,10">Geometric Progression Method</TextBlock>
-                    <UniformGrid Columns="2" Margin="10,0,10,0">
-                        <Button Padding="10" Command="{Binding CalculateGeometricProgressionFiveSpeedCommand}" CommandParameter="5S">5 Speed</Button>
-                        <Button Padding="10" Command="{Binding CalculateGeometricProgressionFiveSpeedCommand}" CommandParameter="6S">6 Speed</Button>
+                        </StackPanel>
+                        <StackPanel Background="AntiqueWhite" Orientation="Horizontal" Margin="10,10,10,0">
+                            <TextBlock Name="drivetrain" Padding="0,5,5,5" Text="{Binding Variation1}"></TextBlock>
+                            <TextBlock Padding="5" Text="{Binding Variation2}"></TextBlock>
+                            <TextBlock Padding="5" Text="{Binding Variation3}"></TextBlock>
+                        </StackPanel>
+                        <StackPanel>
+
+                        </StackPanel>
+                        <UniformGrid Columns="3" Margin="10">
+                            <UniformGrid     Columns="2" >
+                                <TextBlock>Gear</TextBlock>
+                                <TextBlock></TextBlock>
+                                <TextBlock>Lowest Gear</TextBlock>
+                                <TextBox Text="{Binding LowestGear,Converter={StaticResource DecimalConverter }}"></TextBox>
+                                <TextBlock>2nd Gear</TextBlock>
+                                <TextBox Text="{Binding SecondGear,Converter={StaticResource DecimalConverter }}"></TextBox>
+                                <TextBlock>3rd Gear</TextBlock>
+                                <TextBox Text="{Binding ThirdGear,Converter={StaticResource DecimalConverter }}"></TextBox>
+                                <TextBlock>4th Gear</TextBlock>
+                                <TextBox Text="{Binding FourthGear,Converter={StaticResource DecimalConverter }}"></TextBox>
+                                <TextBlock>5th Gear</TextBlock>
+                                <TextBox Text="{Binding FifthGear,Converter={StaticResource DecimalConverter }}"></TextBox>
+                                <TextBlock>Highers Gear</TextBlock>
+                                <TextBox Text="{Binding HighestGear,Converter={StaticResource DecimalConverter }}"></TextBox>
+                                <TextBlock>Gradability</TextBlock>
+                                <TextBox Text="{Binding Gradability,Converter={StaticResource DecimalConverter }}"></TextBox>
+                            </UniformGrid>
+                            <UniformGrid x:Name="TorqueBlock"  Columns="2" >
+                                <TextBlock>Max Torque</TextBlock>
+                                <TextBlock></TextBlock>
+                                <TextBlock>1st Gear</TextBlock>
+                                <TextBox Text="{Binding TorqueFst,Converter={StaticResource DecimalConverter }}"></TextBox>
+                                <TextBlock>2nd Gear</TextBlock>
+                                <TextBox Text="{Binding TorqueSnd,Converter={StaticResource DecimalConverter }}"></TextBox>
+                                <TextBlock>3rd Gear</TextBlock>
+                                <TextBox Text="{Binding TorqueTrd,Converter={StaticResource DecimalConverter }}"></TextBox>
+                                <TextBlock>4th Gear</TextBlock>
+                                <TextBox Text="{Binding TorqueFourth,Converter={StaticResource DecimalConverter }}"></TextBox>
+                                <TextBlock>5th Gear</TextBlock>
+                                <TextBox Text="{Binding TorqueFifth,Converter={StaticResource DecimalConverter }}"></TextBox>
+                                <TextBlock>6th Gear</TextBlock>
+                                <TextBox Text="{Binding TorqueSixth,Converter={StaticResource DecimalConverter }}"></TextBox>
+                                
+                            </UniformGrid>
+                            <UniformGrid x:Name="VelocityBlock"  Columns="2" >
+                                <TextBlock>Max Speed</TextBlock>
+                                <TextBlock></TextBlock>
+                                <TextBlock>1st Gear</TextBlock>
+                                <TextBox Text="{Binding SpeedFst,Converter={StaticResource DecimalConverter }}"></TextBox>
+                                <TextBlock>2nd Gear</TextBlock>
+                                <TextBox Text="{Binding SpeedSnd,Converter={StaticResource DecimalConverter }}"></TextBox>
+                                <TextBlock>3rd Gear</TextBlock>
+                                <TextBox Text="{Binding SpeedTrd,Converter={StaticResource DecimalConverter }}"></TextBox>
+                                <TextBlock>4th Gear</TextBlock>
+                                <TextBox Text="{Binding SpeedFourth,Converter={StaticResource DecimalConverter }}"></TextBox>
+                                <TextBlock>5th Gear</TextBlock>
+                                <TextBox Text="{Binding SpeedFifth,Converter={StaticResource DecimalConverter }}"></TextBox>
+                                <TextBlock>6th Gear</TextBlock>
+                                <TextBox Text="{Binding SpeedSixth,Converter={StaticResource DecimalConverter }}"></TextBox>
+                            </UniformGrid>
+                        </UniformGrid>
+                    </StackPanel>
+                </DockPanel>
+
+            </TabItem>
+            <TabItem Header="Specific">
+                <DockPanel>
+                    <Button DockPanel.Dock="Top" Command="{Binding TestGraphCommand}">Update</Button>
+                    <UniformGrid DockPanel.Dock="Bottom" Margin="10">
+                        <lvc:CartesianChart Padding="10" Series="{Binding Graph1}" XAxes="{Binding TorqueAxes}"  />
+                        <lvc:CartesianChart Padding="10" Series="{Binding Graph2}" XAxes="{Binding SpeedAxes}"/>
                     </UniformGrid>
-                    <TextBlock Margin="10,10,10,10">Progessive Method</TextBlock>
-                    <UniformGrid Columns="2" Margin="10,0,10,0">
-                        <Button Command="{Binding CalculateProgressiveCommand}" CommandParameter="5S" Padding="10" >5 Speed</Button>
-                        <Button Command="{Binding CalculateProgressiveCommand}" CommandParameter="6S" Padding="10">6 Speed</Button>
-                    </UniformGrid>
-                </StackPanel>
+                </DockPanel>
+               
                 
-                <StackPanel Orientation="Horizontal" Margin="10,0,10,0">
-                    <TextBlock Padding="0,5,5,5" Text="{Binding Variation1}"></TextBlock>
-                    <TextBlock Padding="5" Text="{Binding Variation2}"></TextBlock>
-                    <TextBlock Padding="5" Text="{Binding Variation3}"></TextBlock>
-                </StackPanel>
-                <UniformGrid  Columns="2"  Margin="10,10,10,0">
-                   
-                    <TextBlock>Lowest Gear</TextBlock>
-                    <TextBox Text="{Binding LowestGear,Converter={StaticResource DecimalConverter }}"></TextBox>
-                    <TextBlock>2nd Gear</TextBlock>
-                    <TextBox Text="{Binding SecondGear,Converter={StaticResource DecimalConverter }}"></TextBox>
-                    <TextBlock>3rd Gear</TextBlock>
-                    <TextBox Text="{Binding ThirdGear,Converter={StaticResource DecimalConverter }}"></TextBox>
-                    <TextBlock>4th Gear</TextBlock>
-                    <TextBox Text="{Binding FourthGear,Converter={StaticResource DecimalConverter }}"></TextBox>
-                    <TextBlock>5th Gear</TextBlock>
-                    <TextBox Text="{Binding FifthGear,Converter={StaticResource DecimalConverter }}"></TextBox>
-                    <TextBlock>Highers Gear</TextBlock>
-                    <TextBox Text="{Binding HighestGear,Converter={StaticResource DecimalConverter }}"></TextBox>
-                </UniformGrid>
-            </StackPanel>
-        </StackPanel>
+            </TabItem>
+        </TabControl>
        
 
     </Grid>

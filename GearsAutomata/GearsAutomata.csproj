@@ -5,7 +5,15 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+	<UseWindowsForms>true</UseWindowsForms>
+
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="LiveChartsCore" Version="2.0.0-beta.700" />
+    <PackageReference Include="LiveChartsCore.SkiaSharpView.WPF" Version="2.0.0-beta.700" />
+    <PackageReference Include="WinForms.DataVisualization" Version="1.7.0" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\MathsCalc\MathsCalc.fsproj" />

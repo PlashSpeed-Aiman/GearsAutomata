@@ -77,13 +77,24 @@ module Formulaes =
         let a = 0.35
         let roots = FindRoots.Cubic( d ,c, b, a)
         let a,b,c = roots.ToTuple() 
-        let V = 
+        let Value = 
             match a,b,c with
                 | (a,b,c) when a.IsRealNonNegative() = true -> (double) a.Real 
                 | (a,b,c) when b.IsRealNonNegative() = true -> b.Real
                 | (a,b,c) when c.IsRealNonNegative() = true -> c.Real
                 | _ -> 0.0
-        V
+        Value
 
+    let Gradibility (constantVal:double) adhesionCoefficient  rollingResistance : double  =
+        let result = ((constantVal*adhesionCoefficient) - rollingResistance) |> atan
+        (180.0 / Math.PI) * result;
     
+    let TorqueForce (driveLineEfficiency:double) finalDrive rollingRadius gearNumber engineTorque = 
+        driveLineEfficiency * finalDrive * (gearNumber/rollingRadius) * engineTorque
         
+    let MaxVelocity finalDrive driveLineEfficiency rollingRadius maxRpm gearNumber =
+         /// <summary>Calculates the max velocity for each gear</summary>
+         /// <param name="a">Parameter A</param>
+        let a = maxRpm * (Math.PI/30.0) * rollingRadius
+      
+        finalDrive * driveLineEfficiency * (a/gearNumber) 

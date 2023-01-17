@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms.DataVisualization.Charting;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -20,9 +21,15 @@ namespace GearsAutomata
     /// </summary>
     public partial class MainWindow : Window
     {
+        Dictionary<int, double> value;
         public MainWindow()
         {
             InitializeComponent();
+            value = new Dictionary<int, double>();
+            for (int i = 0; i < 10; i++)
+                value.Add(i, 10 * i);
+
+            
         }
 
         private void RadioButton_Checked(object sender, RoutedEventArgs e)
