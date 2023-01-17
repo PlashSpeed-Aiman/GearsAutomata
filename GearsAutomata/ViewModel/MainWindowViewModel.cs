@@ -775,8 +775,8 @@ namespace GearsAutomata.ViewModel
             Trace.WriteLine("ACTIVATED!");
             
             Graph1 = new ObservableCollection<ISeries> { new LineSeries<Double> {  
-                DataLabelsSize = 18,
-                DataLabelsPaint = new SolidColorPaint(SKColors.Blue),
+                DataLabelsSize = 15,
+                DataLabelsPaint = new SolidColorPaint(SKColors.DimGray),
                 // all the available positions at:
                 // https://lvcharts.com/api/2.0.0-beta.700/LiveChartsCore.Measure.DataLabelsPosition
                 DataLabelsPosition = LiveChartsCore.Measure.DataLabelsPosition.Bottom,
@@ -785,11 +785,13 @@ namespace GearsAutomata.ViewModel
                 // and returns a string.
                 // in this case we returned the PrimaryValue property as currency
                 DataLabelsFormatter = (point) => point.PrimaryValue.ToString("F"),
+                TooltipLabelFormatter = point => $"{point.PrimaryValue:F1}",
+                LineSmoothness = 0 ,
                 Values = new ObservableCollection<double> {TorqueFst,TorqueSnd,TorqueTrd,TorqueFourth,TorqueFifth,TorqueSixth } } };
             Graph2 = new ObservableCollection<ISeries> { new LineSeries<Double>
             {
-                DataLabelsSize = 18,
-                DataLabelsPaint = new SolidColorPaint(SKColors.Blue),
+                DataLabelsSize = 15,
+                DataLabelsPaint = new SolidColorPaint(SKColors.DimGray),
                 // all the available positions at:
                 // https://lvcharts.com/api/2.0.0-beta.700/LiveChartsCore.Measure.DataLabelsPosition
                 DataLabelsPosition = LiveChartsCore.Measure.DataLabelsPosition.Bottom,
@@ -798,6 +800,7 @@ namespace GearsAutomata.ViewModel
                 // and returns a string.
                 // in this case we returned the PrimaryValue property as currency
                 DataLabelsFormatter = (point) => point.PrimaryValue.ToString("F"),
+                TooltipLabelFormatter = point => $"{point.PrimaryValue:F1}",
                 Values = new ObservableCollection<double> {SpeedFst,SpeedSnd,SpeedTrd,SpeedFourth,SpeedFifth,SpeedSixth }
             } };
             TorqueAxes = new Axis[]

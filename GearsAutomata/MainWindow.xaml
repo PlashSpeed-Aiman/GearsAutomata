@@ -182,7 +182,7 @@
             <TabItem Header="Specific">
                 <DockPanel>
                     <Button DockPanel.Dock="Top" Command="{Binding TestGraphCommand}">Update</Button>
-                    <UniformGrid DockPanel.Dock="Bottom" Margin="10">
+                    <UniformGrid DockPanel.Dock="Bottom" Margin="10" Columns="1">
                         <lvc:CartesianChart Padding="10" Series="{Binding Graph1}" XAxes="{Binding TorqueAxes}"  />
                         <lvc:CartesianChart Padding="10" Series="{Binding Graph2}" XAxes="{Binding SpeedAxes}"/>
                     </UniformGrid>
