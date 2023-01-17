@@ -123,7 +123,7 @@
 
                         </StackPanel>
                         <UniformGrid Columns="3" Margin="10">
-                            <UniformGrid     Columns="2" >
+                            <UniformGrid     Columns="2" Margin="5">
                                 <TextBlock>Gear</TextBlock>
                                 <TextBlock></TextBlock>
                                 <TextBlock>Lowest Gear</TextBlock>
@@ -141,7 +141,7 @@
                                 <TextBlock>Gradability</TextBlock>
                                 <TextBox Text="{Binding Gradability,Converter={StaticResource DecimalConverter }}"></TextBox>
                             </UniformGrid>
-                            <UniformGrid x:Name="TorqueBlock"  Columns="2" >
+                            <UniformGrid x:Name="TorqueBlock"  Columns="2"  Margin="5">
                                 <TextBlock>Max Torque</TextBlock>
                                 <TextBlock></TextBlock>
                                 <TextBlock>1st Gear</TextBlock>
@@ -158,7 +158,7 @@
                                 <TextBox Text="{Binding TorqueSixth,Converter={StaticResource DecimalConverter }}"></TextBox>
                                 
                             </UniformGrid>
-                            <UniformGrid x:Name="VelocityBlock"  Columns="2" >
+                            <UniformGrid x:Name="VelocityBlock"  Columns="2" Margin="5" >
                                 <TextBlock>Max Speed</TextBlock>
                                 <TextBlock></TextBlock>
                                 <TextBlock>1st Gear</TextBlock>
