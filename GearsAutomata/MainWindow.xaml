@@ -60,21 +60,7 @@
             <TextBlock>Final Drive</TextBlock>
             <TextBox Text="{Binding FinalDrive}"></TextBox>
         </StackPanel>
-        <!--<StackPanel Grid.Column="1" Orientation="Vertical">
-            <Button>FWD</Button>
-            <Button>RWD</Button>
-
-            <Button>Fixed Max Velocity</Button>
-
-            <Button>Max</Button>
-
-            <Button>6 Speed</Button>
-            <Button></Button>
-            <Button></Button>
-            <Button></Button>
-
-
-        </StackPanel>-->
+   
         <TabControl Grid.Column="1">
             <TabItem Header="General">
                 <DockPanel>
@@ -182,9 +168,13 @@
             <TabItem Header="Specific">
                 <DockPanel>
                     <Button DockPanel.Dock="Top" Command="{Binding TestGraphCommand}">Update</Button>
-                    <UniformGrid DockPanel.Dock="Bottom" Margin="10" Columns="1">
+                    <UniformGrid DockPanel.Dock="Bottom" Margin="10" >
                         <lvc:CartesianChart Padding="10" Series="{Binding Graph1}" XAxes="{Binding TorqueAxes}"  />
                         <lvc:CartesianChart Padding="10" Series="{Binding Graph2}" XAxes="{Binding SpeedAxes}"/>
+                        <lvc:CartesianChart Name="G6SChart" Padding="10" Series="{Binding Graph3}" XAxes="{Binding G5SxAxes}"/>
+                        <lvc:CartesianChart Padding="10" Series="{Binding Graph4}" XAxes="{Binding P5SxAxes}"/>
+                        <lvc:CartesianChart Padding="10" Series="{Binding Graph5}" XAxes="{Binding G6SxAxes}"/>
+                        <lvc:CartesianChart Padding="10" Series="{Binding Graph6}" XAxes="{Binding P6SxAxes}"/>
                     </UniformGrid>
                 </DockPanel>
                

@@ -63,10 +63,14 @@ namespace GearsAutomata.ViewModel
         private ObservableCollection<ISeries> _graph2;
         private Axis[] _torqueAxes;
         private Axis[] _speedAxes;
-        private LineSeries<double> _graph3;
-        private LineSeries<double> _graph4;
-        private LineSeries<double> _graph5;
-        private LineSeries<double> _graph6;
+        private Axis[] _g5SXAxes;
+        private Axis[] _p5SXAxes;
+        private Axis[] _g6SXAxes;
+        private Axis[] _p6SXAxes;
+        private ObservableCollection<ISeries> _graph3;
+        private ObservableCollection<ISeries> _graph4;
+        private ObservableCollection<ISeries> _graph5;
+        private ObservableCollection<ISeries> _graph6;
         
         private ObservableCollection<double> observable1;
         private ObservableCollection<double> observable2;
@@ -121,6 +125,50 @@ namespace GearsAutomata.ViewModel
 
         }
 
+        public ObservableCollection<ISeries> Graph3
+        {
+            get => _graph3;
+            set
+            {
+                if (Equals(value, _graph3)) return;
+                _graph3 = value ?? throw new ArgumentNullException(nameof(value));
+                OnPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<ISeries> Graph4
+        {
+            get => _graph4;
+            set
+            {
+                if (Equals(value, _graph4)) return;
+                _graph4 = value ?? throw new ArgumentNullException(nameof(value));
+                OnPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<ISeries> Graph5
+        {
+            get => _graph5;
+            set
+            {
+                if (Equals(value, _graph5)) return;
+                _graph5 = value ?? throw new ArgumentNullException(nameof(value));
+                OnPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<ISeries> Graph6
+        {
+            get => _graph6;
+            set
+            {
+                if (Equals(value, _graph6)) return;
+                _graph6 = value ?? throw new ArgumentNullException(nameof(value));
+                OnPropertyChanged();
+            }
+        }
+
         public Axis[] TorqueAxes
         {
             get => _torqueAxes;
@@ -143,26 +191,51 @@ namespace GearsAutomata.ViewModel
             }
         }
 
-        public ISeries[] Graph3
+        public Axis[] G5SxAxes
         {
-            get;
-            set;
+            get => _g5SXAxes;
+            set
+            {
+                if (Equals(value, _g5SXAxes)) return;
+                _g5SXAxes = value ?? throw new ArgumentNullException(nameof(value));
+                OnPropertyChanged();
+            }
+        }
 
-        } 
-        public ISeries[] Graph4
+        public Axis[] P5SxAxes
         {
-            get;
-            set;
+            get => _p5SXAxes;
+            set
+            {
+                if (Equals(value, _p5SXAxes)) return;
+                _p5SXAxes = value ?? throw new ArgumentNullException(nameof(value));
+                OnPropertyChanged();
+            }
+        }
 
-        } 
-        public ISeries[] Graph5
+        public Axis[] G6SxAxes
         {
-            get;
-            set;
+            get => _g6SXAxes;
+            set
+            {
+                if (Equals(value, _g6SXAxes)) return;
+                _g6SXAxes = value ?? throw new ArgumentNullException(nameof(value));
+                OnPropertyChanged();
+            }
+        }
 
-        } 
-        
-        
+        public Axis[] P6SxAxes
+        {
+            get => _p6SXAxes;
+            set
+            {
+                if (Equals(value, _p6SXAxes)) return;
+                _p6SXAxes = value ?? throw new ArgumentNullException(nameof(value));
+                OnPropertyChanged();
+            }
+        }
+
+
         public Dictionary<int, double> ValueDictionary
         {
             get;
@@ -571,12 +644,12 @@ namespace GearsAutomata.ViewModel
             }
         }
 
-        
 
 
         double calculateKF()
         {
-            Trace.WriteLine((float)(_bVal + (_height * _rollingResistance)) / ((_lVal + (_adhesionCoefficient * _height))));
+            Trace.WriteLine((float)(_bVal + (_height * _rollingResistance)) /
+                            ((_lVal + (_adhesionCoefficient * _height))));
             return (_bVal + (_height * _rollingResistance)) / ((_lVal + (_adhesionCoefficient * _height)));
         }
         double calculateKR()
@@ -770,6 +843,17 @@ namespace GearsAutomata.ViewModel
             
         }
 
+        private ObservableCollection<double> calculateForGearGraphs(Action<object> method1,string msg)
+        {
+            if (msg == "5S")
+            {
+                method1.Invoke(msg);
+                return new ObservableCollection<double> { LowestGear, SecondGear, ThirdGear, FourthGear, HighestGear };
+            }
+            method1.Invoke(msg);
+            return new ObservableCollection<double> { LowestGear, SecondGear, ThirdGear, FourthGear,FifthGear, HighestGear };
+        }
+
         void GenerateGraph(object parameter)
         {
             Trace.WriteLine("ACTIVATED!");
@@ -803,6 +887,66 @@ namespace GearsAutomata.ViewModel
                 TooltipLabelFormatter = point => $"{point.PrimaryValue:F1}",
                 Values = new ObservableCollection<double> {SpeedFst,SpeedSnd,SpeedTrd,SpeedFourth,SpeedFifth,SpeedSixth }
             } };
+            Graph3 = new ObservableCollection<ISeries> { new LineSeries<Double> {  
+                DataLabelsSize = 15,
+                DataLabelsPaint = new SolidColorPaint(SKColors.DimGray),
+                // all the available positions at:
+                // https://lvcharts.com/api/2.0.0-beta.700/LiveChartsCore.Measure.DataLabelsPosition
+                DataLabelsPosition = LiveChartsCore.Measure.DataLabelsPosition.Bottom,
+                // The DataLabelsFormatter is a function 
+                // that takes the current point as parameter
+                // and returns a string.
+                // in this case we returned the PrimaryValue property as currency
+                DataLabelsFormatter = (point) => point.PrimaryValue.ToString("F"),
+                TooltipLabelFormatter = point => $"{point.PrimaryValue:F1}",
+                LineSmoothness = 0 ,
+                Values = calculateForGearGraphs(CalculateGeometricProgression,"5S")
+                
+            }};
+            Graph4 = new ObservableCollection<ISeries> { new LineSeries<Double>
+            {
+                DataLabelsSize = 15,
+                DataLabelsPaint = new SolidColorPaint(SKColors.DimGray),
+                // all the available positions at:
+                // https://lvcharts.com/api/2.0.0-beta.700/LiveChartsCore.Measure.DataLabelsPosition
+                DataLabelsPosition = LiveChartsCore.Measure.DataLabelsPosition.Bottom,
+                // The DataLabelsFormatter is a function 
+                // that takes the current point as parameter
+                // and returns a string.
+                // in this case we returned the PrimaryValue property as currency
+                DataLabelsFormatter = (point) => point.PrimaryValue.ToString("F"),
+                TooltipLabelFormatter = point => $"{point.PrimaryValue:F1}",
+                Values = calculateForGearGraphs(CalculateProgressive,"5S")
+            } };
+            Graph5 = new ObservableCollection<ISeries> { new LineSeries<Double> {  
+                DataLabelsSize = 15,
+                DataLabelsPaint = new SolidColorPaint(SKColors.DimGray),
+                // all the available positions at:
+                // https://lvcharts.com/api/2.0.0-beta.700/LiveChartsCore.Measure.DataLabelsPosition
+                DataLabelsPosition = LiveChartsCore.Measure.DataLabelsPosition.Bottom,
+                // The DataLabelsFormatter is a function 
+                // that takes the current point as parameter
+                // and returns a string.
+                // in this case we returned the PrimaryValue property as currency
+                DataLabelsFormatter = (point) => point.PrimaryValue.ToString("F"),
+                TooltipLabelFormatter = point => $"{point.PrimaryValue:F1}",
+                LineSmoothness = 0 ,
+                Values = calculateForGearGraphs(CalculateGeometricProgression,"6S")} };
+            Graph6 = new ObservableCollection<ISeries> { new LineSeries<Double>
+            {
+                DataLabelsSize = 15,
+                DataLabelsPaint = new SolidColorPaint(SKColors.DimGray),
+                // all the available positions at:
+                // https://lvcharts.com/api/2.0.0-beta.700/LiveChartsCore.Measure.DataLabelsPosition
+                DataLabelsPosition = LiveChartsCore.Measure.DataLabelsPosition.Bottom,
+                // The DataLabelsFormatter is a function 
+                // that takes the current point as parameter
+                // and returns a string.
+                // in this case we returned the PrimaryValue property as currency
+                DataLabelsFormatter = (point) => point.PrimaryValue.ToString("F"),
+                TooltipLabelFormatter = point => $"{point.PrimaryValue:F1}",
+                Values = calculateForGearGraphs(CalculateProgressive,"6S")} };
+
             TorqueAxes = new Axis[]
             {
                 new Axis
@@ -830,6 +974,56 @@ namespace GearsAutomata.ViewModel
                     Labels = new string[] { "1","2","3","4","5","6" }, 
 
                     
+                }
+            };
+            G5SxAxes = new Axis[]
+            {
+                new Axis
+                {
+                    Name = $"Geometric 5 Speed [{_variation1},{_variation2}]",
+                    NamePaint = new SolidColorPaint(SKColors.Black),
+
+                    LabelsPaint = new SolidColorPaint(SKColors.Blue),
+                    TextSize = 10,
+                    Labels = new string[] { "1", "2", "3", "4", "5", "6" },
+
+
+                }
+            };
+            P5SxAxes = new Axis[]
+            {
+                new Axis
+                {
+                    Name = $"Progressive 5 Speed [{_variation1},{_variation2}]",
+                    NamePaint = new SolidColorPaint(SKColors.Black),
+
+                    LabelsPaint = new SolidColorPaint(SKColors.Blue),
+                    TextSize = 10,
+                    Labels = new string[] { "1", "2", "3", "4", "5", "6" },
+                }
+            };
+            G6SxAxes = new Axis[]
+            {
+                new Axis
+                {
+                    Name = $"Geometric 6 Speed [{_variation1},{_variation2}]",
+                    NamePaint = new SolidColorPaint(SKColors.Black),
+
+                    LabelsPaint = new SolidColorPaint(SKColors.Blue),
+                    TextSize = 10,
+                    Labels = new string[] { "1", "2", "3", "4", "5", "6" },
+                }
+            };
+            P6SxAxes = new Axis[]
+            {
+                new Axis
+                {
+                    Name = $"Progressive 6 Speed [{_variation1},{_variation2}]",
+                    NamePaint = new SolidColorPaint(SKColors.Black),
+
+                    LabelsPaint = new SolidColorPaint(SKColors.Blue),
+                    TextSize = 10,
+                    Labels = new string[] { "1", "2", "3", "4", "5", "6" },
                 }
             };
         }
